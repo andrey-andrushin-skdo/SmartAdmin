@@ -64,8 +64,8 @@ namespace SmartAdmin.Controllers
             var model = users.Select(u => new UserViewModel {
                 Id = u.Id,
                 Name = u.LastName + 
-                    (string.IsNullOrEmpty(u.FirstName) ? string.Empty : " " + char.ToUpper(u.FirstName[0])) + 
-                    (string.IsNullOrEmpty(u.SecondName) ? string.Empty : " " + char.ToUpper(u.SecondName[0])),
+                    (string.IsNullOrEmpty(u.FirstName) ? string.Empty : " " + char.ToUpper(u.FirstName[0]) + ".") + 
+                    (string.IsNullOrEmpty(u.SecondName) ? string.Empty : " " + char.ToUpper(u.SecondName[0]) + "."),
                 IsActive = u.IsActive
             });
 
