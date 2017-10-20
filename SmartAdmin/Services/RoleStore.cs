@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using SmartAdmin.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmartAdmin.Services
 {
@@ -31,12 +32,12 @@ namespace SmartAdmin.Services
 
         public Task<string> GetRoleIdAsync(UserRole role, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(role.Id.ToString());
         }
 
         public Task<string> GetRoleNameAsync(UserRole role, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(role.Code);
         }
 
         public Task SetRoleNameAsync(UserRole role, string roleName, CancellationToken cancellationToken)
@@ -46,7 +47,7 @@ namespace SmartAdmin.Services
 
         public Task<string> GetNormalizedRoleNameAsync(UserRole role, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(role.Code);
         }
 
         public Task SetNormalizedRoleNameAsync(UserRole role, string normalizedName, CancellationToken cancellationToken)
@@ -54,14 +55,20 @@ namespace SmartAdmin.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<UserRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
+        public async Task<UserRole> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            int id;
+            if (int.TryParse(roleId, out id))
+            {
+                return await dataContext.UserRoles.FirstOrDefaultAsync(r => r.Id == id);
+            }
+
+            return null;
         }
 
-        public Task<UserRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
+        public async Task<UserRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return await dataContext.UserRoles.FirstOrDefaultAsync(r => r.Code == normalizedRoleName);
         }
         
         public void Dispose()

@@ -1,3 +1,5 @@
 SmartAdmin/bin
 SmartAdmin/obj
 SmartAdmin/wwwroot/lib
+*.user
+.vs/

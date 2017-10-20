@@ -35,7 +35,9 @@ namespace SmartAdmin
             {
                 config.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
-            
+
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher>();
+
             services.AddIdentity<User, UserRole>()
                 .AddUserStore<UserStore>()
                 .AddRoleStore<RoleStore>();
