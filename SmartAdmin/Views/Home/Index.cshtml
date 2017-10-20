@@ -16,7 +16,7 @@
             <th>
                 @Html.ActionLink("Пользователь", "Index", new { sortMember = "name", sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter })
             </th>
-            <th>
+            <th width="50px" >
                 @Html.ActionLink("Активен", "Index", new { sortMember = "isActive", sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter })
             </th>
         </tr>
@@ -30,8 +30,9 @@
                     <td>
                         @Html.DisplayFor(m => user.Name)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.CheckBoxFor(m => user.IsActive, new { value = user.Id, @checked = user.IsActive, @onchange = "onIsActiveChanged(this);" })
+                        <span id="glyphicon-for-user-@user.Id" style="margin-left: 15px" aria-hidden="true"></span>
                     </td>
                 </tr>
             }
@@ -48,6 +49,10 @@
 @section Scripts {
     <script>
         function onIsActiveChanged(input) {
+            var children = $('#glyphicon-for-user-' + input.value);
+            children.removeClass();
+            children.addClass('glyphicon glyphicon-flash');
+
             $.ajax({
                 type: 'PUT',
                 url: '@Url.Action("Activate")',
@@ -55,6 +60,12 @@
                     id: input.value,
                     isActive: input.checked
                 }
+            }).success(function () {
+                children.removeClass();
+                children.addClass('glyphicon glyphicon-ok');
+            }).error(function () { 
+                children.removeClass();
+                children.addClass('glyphicon glyphicon-exclamation-sign');
             });
         }
     </script>
