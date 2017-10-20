@@ -17,7 +17,6 @@ namespace SmartAdmin
 {
     public class Startup
     {
-
         private readonly IHostingEnvironment env;
         
         public Startup(IConfiguration configuration, IHostingEnvironment env)
