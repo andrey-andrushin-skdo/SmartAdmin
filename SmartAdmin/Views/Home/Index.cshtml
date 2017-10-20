@@ -1,0 +1,56 @@
+﻿@using ReflectionIT.Mvc.Paging
+@using SmartAdmin.ViewModels
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+@model PagingList<UserViewModel>
+@{
+    ViewBag.Title = "Активация пользователей";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Id", "Index", new { sortMember = "id", sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Пользователь", "Index", new { sortMember = "name", sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter})
+        </th>
+        <th>
+            @Html.ActionLink("Активен", "Index", new {sortMember = "isActive", sortOrder = ViewBag.SortOrder, currentFilter = ViewBag.CurrentFilter})
+        </th>
+    </tr>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => user.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(m => user.Name)
+            </td>
+            <td>
+                @Html.CheckBoxFor(m => user.IsActive, new { value = user.Id, @checked = user.IsActive, @onchange = "onIsActiveChanged(this);"})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<br />
+
+<vc:pager paging-list="@Model" />
+
+@section Scripts {
+    <script>
+        function onIsActiveChanged(input) {
+            $.ajax({
+                type: 'PUT',
+                url: '@Url.Action("Activate")',
+                data: {
+                    id: input.value,
+                    isActive: input.checked
+                }
+            });
+        }
+    </script>
+}
