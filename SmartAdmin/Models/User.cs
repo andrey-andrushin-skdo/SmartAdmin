@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartAdmin.Models
@@ -17,7 +18,7 @@ namespace SmartAdmin.Models
 
         [Required]
         public string Password { get; set; }
-
+        
         [Required]
         public string FirstName { get; set; }
         
@@ -27,6 +28,8 @@ namespace SmartAdmin.Models
         public string LastName { get; set; }
 
         public bool IsActive { get; set; }
+
+        public DateTime? DateUpdate { get; set; }
     }
 
     [Table("UserRole")]

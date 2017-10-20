@@ -90,6 +90,7 @@ namespace SmartAdmin.Controllers
                     if (user != null)
                     {
                         user.IsActive = vm.IsActive;
+                        user.DateUpdate = DateTime.Now; // ???
 
                         logger.LogInformation(
                             vm.IsActive
