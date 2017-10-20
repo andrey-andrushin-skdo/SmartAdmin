@@ -55,7 +55,8 @@ namespace SmartAdmin.Controllers
                     ? users.OrderBy(u => u.LastName) 
                     : users.OrderByDescending(u => u.LastName);
             }
-            
+
+            ViewBag.CurrentFilter = currentFilter;
             ViewBag.SortOrder = string.Equals(sortOrder, "asc", StringComparison.OrdinalIgnoreCase) 
                 ? "desc"
                 : "asc";
